@@ -1,0 +1,39 @@
+
+server:
+  port: 5000
+  
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lab_system
+    username: root
+    password: 1234
+
+  mvc:
+    static-path-pattern: /static/**
+  md5:
+    salt: yang
+
+
+
+
+mybatis-plus:
+  type-aliases-package: com.qfedu.labsystem.pojo
+  mapper-locations:  classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: false
+
+config:
+  jwt:
+    secret: kerwin_any_code
+    expire: 3600
+    header: token
+
+sky:
+ alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tFXj5jXuGkWk2swgF37
+    bucket-name: web-tlias-yzl
+    access-key-secret: szFeSUdAUzV4176oW5ctmE9Hw5u6YO
+
+

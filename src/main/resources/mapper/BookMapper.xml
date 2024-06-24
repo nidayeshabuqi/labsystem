@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.labsystem.mapper.BookMapper">
+
+    <resultMap id="result" type="com.qfedu.labsystem.pojo.Book">
+        <id column="id" property="id"></id>
+        <result column="lab_id" property="lab_id"></result>
+        <result column="book_time" property="book_time"></result>
+        <result column="book_class" property="book_class"></result>
+        <result column="book_reason" property="book_reason"></result>
+        <result column="book_state" property="book_state"></result>
+        <result column="book_username" property="book_username"></result>
+        <association property="lab" javaType="com.qfedu.labsystem.pojo.Lab"
+        select="getLab" column="lab_id"
+        ></association>
+    </resultMap>
+    <select id="getLab" resultType="com.qfedu.labsystem.pojo.Lab">
+        select * from labs
+        where id = #{any_id}
+    </select>
+    <select id="getBookList" resultMap="result">
+        select *
+        from books
+        <where>
+            <if test="book_username!=null and book_username!=''">
+                and book_username = #{book_username}
+            </if>
+            <if test="lab_id!=null and lab_id!=''">
+                and lab_id = #{lab_id}
+            </if>
+            <if test="book_state!=null">
+                and book_state = #{book_state}
+                and book_time >= curdate()
+            </if>
+            <if test="book_time!=null">
+                and book_time = #{book_time}
+                and book_state !=2
+            </if>
+        </where>
+        order by book_time , book_class ASC
+    </select>
+
+
+
+
+</mapper>
